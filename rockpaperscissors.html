@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rock, Paper, Scissors</title>
+</head>
+<body>
+    <h1>Still missing functionality.</h1>
+    <h3>Best out of 5 wins</h3>
+    <button id='rock'>Rock</button>
+    <button id='paper'>Paper</button>
+    <button id='scissors'>Scissors</button>
+    <div id='results'>
+      <h1 id='playerScore'></h1>
+      <h2 id='tie'></h2>
+      <h1 id='computerScore'></h1>
+      <h1 id='numberOfGames'></h1>
+      <h1 id='winner'></h1>
+    </div>
+    <script>
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach((button) => {
+          button.addEventListener('click', (e) => {
+            game(button.id);
+          })
+        })
+
+        function computerPlay(){
+            var randNumber = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+
+            if(randNumber === 1){
+                return 'Rock';
+            } else if(randNumber === 2){
+                return'Paper';
+            } else if(randNumber === 3){
+                return'Scissors';
+            }
+        };
+
+        var scoreKeeper = {
+            count: 0,
+            playerScore: 0,
+            computerScore: 0,
+            ties: 0,
+        }
+
+        var gameWinner = '';
+
+        function displayScores(){
+          var playerScoreDisplay = document.getElementById('playerScore');
+          var AiScoreDisplay = document.getElementById('computerScore');
+          var gameCount = document.getElementById('numberOfGames');
+          var ties = document.getElementById('tie');
+          var winner = document.getElementById('winner');
+          playerScoreDisplay.textContent = 'Player Score: ' + scoreKeeper.playerScore;
+          ties.textContent = 'Ties: ' + scoreKeeper.ties;
+          AiScoreDisplay.textContent = 'Computer Score: ' + scoreKeeper.computerScore;
+          gameCount.textContent = 'Number of games: ' + scoreKeeper.count;
+          if(scoreKeeper.count === 5){
+            winner.textContent = gameWinner;
+          }
+        }
+
+        function game(playerSelection){
+                //debugger;
+                const playerChoice = playerSelection;
+                const computerSelection = computerPlay();
+
+                 scoreKeeper.count++
+
+            if(computerSelection === 'Rock'){
+                    //console.log('computer selected rock')
+                    if(playerChoice === 'rock'){
+                        scoreKeeper.ties++
+                        console.log('Tie!')
+                    } else if(playerChoice === 'paper'){
+                        scoreKeeper.playerScore++
+                        console.log('Player wins!')
+                    } else if(playerChoice === 'scissors'){
+                        scoreKeeper.computerScore++
+                        console.log('Computer wins!')
+                    }
+                } else if(computerSelection === 'Paper'){
+                    //console.log('computer selected paper')
+                    if(playerChoice === 'rock'){
+                        scoreKeeper.computerScore++
+                        console.log('Computer wins!')
+                    } else if(playerChoice === 'paper'){
+                        scoreKeeper.ties++
+                        console.log('Tie!')
+                    } else if(playerChoice === 'scissors'){
+                        scoreKeeper.playerScore++
+                        console.log('Player wins!')
+                    }
+                } else if(computerSelection === 'Scissors'){
+                    //console.log('computer selected scissors')
+                    if(playerChoice === 'rock'){
+                        scoreKeeper.playerScore++
+                        console.log('Player wins!')
+                    } else if(playerChoice === 'paper'){
+                        scoreKeeper.computerScore++
+                        console.log('Computer wins!')
+                    } else if(playerChoice === 'scissors'){
+                        scoreKeeper.ties++
+                        console.log('Tie!')
+                    }
+                }
+
+                if(scoreKeeper.count === 5){
+                   if(scoreKeeper.playerScore > scoreKeeper.computerScore){
+                       gameWinner = 'Player won the game!';
+                   } else if(scoreKeeper.playerScore < scoreKeeper.computerScore){
+                       gameWinner = 'Computer won the game!';
+                   } else if(scoreKeeper.playerScore === scoreKeeper.computerScore){
+                       gameWinner = 'The score is tied!';
+                   }
+               }
+
+                displayScores();
+        }
+    </script>
+</body>
+</html>
